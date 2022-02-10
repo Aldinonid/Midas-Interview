@@ -38,6 +38,7 @@ class DetailViewController: UIViewController {
 	let tableView: UITableView = {
 		let table = UITableView()
 		table.register(MenuCell.self, forCellReuseIdentifier: MenuCell.identifier)
+		table.rowHeight = 300
 		table.translatesAutoresizingMaskIntoConstraints = false
 		return table
 	}()
@@ -46,12 +47,13 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 3
+		return items.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: MenuCell.identifier, for: indexPath as IndexPath)
-		cell.textLabel!.text = "\(indexPath.row)"
+		let menu: Menu = items[indexPath.row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: MenuCell.identifier, for: indexPath as IndexPath) as! MenuCell
+		cell.updateCell(menu: menu)
 		return cell
 	}
 	

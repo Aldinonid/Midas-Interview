@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
-	private var shops: [ShopRespond2] = []
+	private var shops: [Shop] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -24,7 +24,9 @@ class HomeViewController: UIViewController {
 		APIService.instance.fetch(type: ShopRespond1.self) { [weak self] result in
 			switch result {
 				case .success(let result):
-					self?.shops = result.payload
+					for i in result.payload {
+						self?.shops.append(contentsOf: i.shop)
+					}
 					DispatchQueue.main.async {
 						self?.tableView.reloadData()
 					}
@@ -51,6 +53,7 @@ class HomeViewController: UIViewController {
 	let tableView: UITableView = {
 		let table = UITableView()
 		table.register(ShopCell.self, forCellReuseIdentifier: ShopCell.identifier)
+		table.rowHeight = 100
 		table.translatesAutoresizingMaskIntoConstraints = false
 		return table
 	}()
@@ -65,7 +68,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let shop: Shop = shops[indexPath.row].shop
+		let shop: Shop = shops[indexPath.row]
 		let cell = tableView.dequeueReusableCell(withIdentifier: ShopCell.identifier, for: indexPath) as! ShopCell
 		cell.updateCell(shop: shop)
 		return cell
@@ -77,7 +80,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let shop: Shop = shops[indexPath.row]
 		let vc = DetailViewController()
+		vc.items = shop.Menus
 		navigationController?.pushViewController(vc, animated: true)
 	}
 	

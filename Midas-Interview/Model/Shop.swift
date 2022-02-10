@@ -12,7 +12,7 @@ struct ShopRespond1: Decodable {
 }
 
 struct ShopRespond2: Decodable {
-	var shop: Shop
+	var shop: [Shop]
 }
 
 struct Shop: Decodable {
