@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
-	private var shops: [Shop] = []
+	private var shops: [ShopRespond2] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,13 +21,10 @@ class HomeViewController: UIViewController {
 		constraints()
 		initTableView()
 		
-		APIService.instance.fetch(type: ShopRespond.self) { [weak self] result in
+		APIService.instance.fetch(type: ShopRespond1.self) { [weak self] result in
 			switch result {
 				case .success(let result):
 					self?.shops = result.payload
-//					let hasil = result.payload
-					
-					
 					DispatchQueue.main.async {
 						self?.tableView.reloadData()
 					}
@@ -68,8 +65,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let shop: Shop = shops[indexPath.row]
-		
+		let shop: Shop = shops[indexPath.row].shop
 		let cell = tableView.dequeueReusableCell(withIdentifier: ShopCell.identifier, for: indexPath) as! ShopCell
 		cell.updateCell(shop: shop)
 		return cell

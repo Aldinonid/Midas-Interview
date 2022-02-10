@@ -38,36 +38,6 @@ class APIService {
 		
 	}
 	
-//	func getData() {
-//		URLSession.shared.dataTask(with: URL(string: "https://midas-be-task.herokuapp.com/midas/config/v1/foodDelivery/dataContent?version=1")!) { data, response, error in
-//			guard let data = data, error == nil else {
-//				print("something went wrong")
-//				return
-//			}
-			
-//			var result: ShopRespond?
-//			do {
-//				result = try JSONDecoder().decode(ShopRespond.self, from: data)
-//			} catch {
-//				print(error.localizedDescription)
-//			}
-			
-//			if let data = data {
-//				print(data)
-//				do {
-//					let json = try JSONSerialization.jsonObject(with: data, options: [])
-//					print(json.payload)
-//				} catch  {
-//					print(error)
-//				}
-//			}
-			
-//			guard let json = result else {return}
-			
-			
-//		}.resume()
-//	}
-	
 }
 
 class MenuViewModel: ObservableObject {
